@@ -2,9 +2,6 @@
 
 PanSou是一个高性能的网盘资源搜索API服务，支持TG搜索和自定义插件搜索。系统设计以性能和可扩展性为核心，支持并发搜索、结果智能排序和网盘类型分类。
 
-[//]: # (MCP服务文档: [MCP-SERVICE.md]&#40;docs/MCP-SERVICE.md&#41;)
-
-
 ## 特性（[详见系统设计文档](docs/%E7%B3%BB%E7%BB%9F%E5%BC%80%E5%8F%91%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3.md)）
 
 - **高性能搜索**：并发执行多个TG频道及异步插件搜索，显著提升搜索速度；工作池设计，高效管理并发任务
@@ -32,6 +29,7 @@ PanSou是一个高性能的网盘资源搜索API服务，支持TG搜索和自定
 [qqpd搜索插件文档](plugin/qqpd/README.md)  
 [gying搜索插件文档](plugin/gying/README.md)   
 [weibo搜索插件文档](plugin/weibo/README.md)   
+[woniu（蜗牛 I 4K）搜索插件文档](plugin/woniu/README.md)   
 [常见问题总结](https://github.com/fish2018/pansou/issues/46)  
 [TG/QQ频道/插件/微博](https://github.com/fish2018/pansou/issues/4)
 
@@ -101,7 +99,7 @@ cd pansou
 | **PORT** | 服务端口 | `8888` | 修改服务监听端口 |
 | **PROXY** | SOCKS5代理 | 无 | 如：`PROXY=socks5://127.0.0.1:1080` |
 | **HTTPS_PROXY/HTTP_PROXY** | HTTPS/HTTP代理 | 无 | 如：`HTTPS_PROXY=http://127.0.0.1:1080`,`HTTP_PROXY=http://127.0.0.1:1080` |
-| **CHANNELS** | 默认搜索的TG频道 | `tgsearchers3` | 多个频道用逗号分隔 |
+| **CHANNELS** | 默认搜索的TG频道 | `tgsearchers7` | 多个频道用逗号分隔 |
 | **ENABLED_PLUGINS** | 指定启用插件，多个插件用逗号分隔 | 无 | 必须显式指定 |
 
 #### 认证配置（可选）
@@ -169,7 +167,8 @@ curl -X POST http://localhost:8888/api/search \
 | ASYNC_RESPONSE_TIMEOUT | 快速响应超时(秒) | `4` |
 | ASYNC_LOG_ENABLED | 异步插件详细日志 | `true` | 
 | CACHE_PATH | 缓存文件路径 | `./cache` |
-| SHARD_COUNT | 缓存分片数量 | `8` |
+| SHARD_COUNT | 缓存分片数量（4~64，自动向上取 2 的幂；留空按 CPU 核心数推算） | 按 CPU |
+| INSECURE_SKIP_TLS_VERIFY | 跳过上游证书校验。**默认关闭**；仅当确认某上游证书确实不可用时才开启 | `false` |
 | CACHE_WRITE_STRATEGY | 缓存写入策略(immediate/hybrid) | `hybrid` |
 | ENABLE_COMPRESSION | 是否启用压缩 | `false` |
 | MIN_SIZE_TO_COMPRESS | 最小压缩阈值(字节) | `1024` |
@@ -815,4 +814,4 @@ curl http://localhost:8888/api/health
 
 ## ⭐ Star 历史
 
-[![Star History Chart](https://api.star-history.com/svg?repos=fish2018/pansou&type=Date)](https://star-history.com/#fish2018/pansou&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=fish2018/pansou&type=Date)](https://star-history.dera.page/#fish2018/pansou&Date)
